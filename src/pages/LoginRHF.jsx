@@ -42,6 +42,8 @@ const Login = () => {
   // };
 
   const onSubmit = async (data) => {
+    console.log(errors.username);
+
     const response = await fetch("https://dummyjson.com/auth/login", {
       method: "POST",
       headers: {
@@ -90,15 +92,17 @@ const Login = () => {
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="Enter User"
                 {...register("username", {
-                  minLength: 3,
-                  message: "min 3 chars",
+                  minLength: {
+                    value: 3,
+                    message: "min 3 chars",
+                  },
                 })}
               />
             </div>
+            {errors?.username?.message && (
+              <p className="text-red-500">{errors.username.message}</p>
+            )}
           </div>
-          {errors.username && (
-            <p className="text-red-500">{errors.username.message}</p>
-          )}
 
           <label
             for="password"
